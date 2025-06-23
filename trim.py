@@ -14,6 +14,7 @@ def target_trim(covariates,outcomes,propensity_scores):
     df_sorted['Group']=pd.qcut(df_sorted.index,q=num_groups,labels=False,duplicates='drop')+1
     max_min_values=df_sorted.groupby('Group')['Propensity_Score'].agg(['max','min'])
     return df_sorted,max_min_values
+
 def source_trim(covariates,outcomes,propensity_scores,split_values):
     ids=np.arange(1,outcomes.shape[0]+1)
     data={'ID':ids,}
@@ -30,5 +31,7 @@ def source_trim(covariates,outcomes,propensity_scores,split_values):
     df_filtered=df[filtered_condition]
     df_sorted=df_filtered.sort_values(by='Propensity_Score',ascending=False).reset_index(drop=True)
     bins=np.array([split_values.loc[5,'min'],split_values.loc[5,"max"],split_values.loc[4,"max"],split_values.loc[3,"max"],split_values.loc[2,"max"],split_values.loc[1,"max"]])
-    df_sorted['Group']=pd.cut(df_sorted['Propensity_Score'],bins=bins,labels=False,include_lowest=True)+1
+    source_group_number=pd.cut(df_sorted['Propensity_Score'],bins=bins,labels=False,include_lowest=True)+1
+    num_groups = len(bins) - 1
+    df_sorted['Group'] = (num_groups + 1) - source_group_number
     return df_sorted
