@@ -8,7 +8,7 @@ def etstimate_theta(y_current, y_rwd, lambda_kj):
         theta, sigma = params
         if sigma <= 0:
              return np.inf
-        # Calculate the log-likelihood for the current and reward data
+        # 現行データとRWDデータの対数尤度を計算
         log_lik_current = np.sum(norm.logpdf(y_current, loc=theta, scale=sigma))
         log_lik_rwd = np.sum(norm.logpdf(y_rwd, loc=theta, scale=sigma))
         N_kj = len(y_rwd)
