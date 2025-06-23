@@ -6,8 +6,8 @@ def propensityscore(target_x,target_y,source_x,source_y):
 
     marge_X=np.vstack([target_x,source_x])
     
-    target_Y=np.zeros_like(target_y).reshape(-1,1)
-    source1_Y=np.ones_like(source_y).reshape(-1,1)
+    target_Y=np.zeros_like(target_y).reshape(-1)
+    source1_Y=np.ones_like(source_y).reshape(-1)
     
     marge_Y=np.concatenate((target_Y,source1_Y),axis=0)
     

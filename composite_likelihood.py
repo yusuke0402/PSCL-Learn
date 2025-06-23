@@ -23,12 +23,12 @@ def etstimate_theta(y_current, y_rwd, lambda_kj):
         return -composite_log_lik
     
     # 初期値の設定
-    initial_params = [np.mean(y_current), np.std(y_current)]  # theta, sigma
+    initial_params = [np.mean(y_current), np.std(y_current)]  
 
     # 最適化の実行
     result = minimize(negative_composite_log_likelihood, initial_params, args=(y_current, y_rwd, lambda_kj),
-                      bounds=[(None, None), (1e-6, None)], method='L-BFGS-B')  # sigmaは正の値に制約
+                      bounds=[(None, None), (1e-6, None)], method='L-BFGS-B')  
 
     # 最適化結果からパラメータを取得
-    estimated_theta, estimated_sigma = result.x
-    return estimated_theta, estimated_sigma
+    estimated_theta = result.x[0]
+    return estimated_theta
